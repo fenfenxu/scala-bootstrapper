@@ -1,5 +1,9 @@
 #!/bin/bash
 
+
+SBT_PROXY_REPO=http://typesafe.artifactoryonline.com/typesafe/twitter
+export SBT_PROXY_REPO
+
 root=$(
   cd $(dirname $(readlink $0 || echo $0))/..
   /bin/pwd
@@ -37,6 +41,6 @@ java -ea                          \
   -XX:MaxTenuringThreshold=0      \
   -Xss8M                          \
   -Xms512M                        \
-  -Xmx3G                          \
+  -Xmx1G                          \
   -server                         \
   -jar $sbtjar "$@"

@@ -1,20 +1,23 @@
 sbtResolver <<= (sbtResolver) { r =>
   Option(System.getenv("SBT_PROXY_REPO")) map { x =>
     Resolver.url("proxy repo for sbt", url(x))(Resolver.ivyStylePatterns)
+    r
   } getOrElse r
 }
 
 resolvers <<= (resolvers) { r =>
-  (Option(System.getenv("SBT_PROXY_REPO")) map { url =>
+  Seq(
+    "typesafe-twittercache" at "http://typesafe.artifactoryonline.com/typesafe/twitter",
+//  "twitter.com" at "http://maven.twttr.com/",
+    "scala-tools" at "http://scala-tools.org/repo-releases/",
+    "maven" at "http://repo1.maven.org/maven2/"
+//  "freemarker" at "http://freemarker.sourceforge.net/maven2/"
+  ) ++ (Option(System.getenv("SBT_PROXY_REPO")) map { url =>
     Seq("proxy-repo" at url)
   } getOrElse {
-    r ++ Seq(
-      "twitter.com" at "http://maven.twttr.com/",
-      "scala-tools" at "http://scala-tools.org/repo-releases/",
-      "maven" at "http://repo1.maven.org/maven2/",
-      "freemarker" at "http://freemarker.sourceforge.net/maven2/"
-    )
-  }) ++ Seq("local" at ("file:" + System.getProperty("user.home") + "/.m2/repo/"))
+    println("you can set SBT_PROXY_REPO to your personal repo")
+    Seq()
+  }) ++ Seq("local" at ("file:" + System.getProperty("user.home") + "/.m2/repository/"))
 }
 
 externalResolvers <<= (resolvers) map identity
