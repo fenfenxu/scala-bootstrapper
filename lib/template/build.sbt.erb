@@ -9,10 +9,10 @@ seq((
     ScalaTestMixins.testSettings
 ): _*)
 
-resolvers += "typesafe-twittercache" at "http://typesafe.artifactoryonline.com/typesafe/twitter"
 
 resolvers <<= DefaultRepos.defaultResolvers
 
+resolvers += "typesafe-twittercache" at "http://typesafe.artifactoryonline.com/typesafe/twitter"
 
 organization := "com.twitter"
 
